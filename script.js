@@ -1,40 +1,65 @@
-//your JS code here. If required.
-// 1. Select the output div element from the DOM
-const outputDiv = document.getElementById("output");
+const num = document.getElementById("ip");
+const div = document.getElementById("output");
+const btn = document.getElementById("btn");
 
-// 2. Initial array provided
-const inputArray =;
 
-// 3. Create the initial promise resolving after 3 seconds with the input array
-const initialPromise = new Promise((resolve) => {
-    setTimeout(() => {
-        resolve(inputArray);
-    }, 3000);
-});
+function promise1(num){
+	return new Promise((resolve) =>{
+		setTimeout(() =>{
+			div.textContent = `Result: ${num}`;
+			resolve(num);
+		}, 2000)
+	});
+}
 
-// 4. Chain the transformations
-initialPromise
-    .then((array) => {
-        // First Transformation: Filter out odd numbers -> keeps [2, 4]
-        const evens = array.filter(num => num % 2 === 0);
+function promise2(num){
+	return new Promise((resolve) =>{
+		setTimeout(() =>{
+			div.textContent = `Result: ${num*2}`;
+			resolve(num*2);
+		}, 2000)
+	});
+}
 
-        // Return a new promise that resolves after a 1-second delay
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                outputDiv.textContent = evens.join(","); // Updates DOM to: 2,4
-                resolve(evens);
-            }, 1000);
-        });
-    })
-    .then((evensArray) => {
-        // Second Transformation: Multiply even numbers by 2 -> results in [4, 8]
-        const multiplied = evensArray.map(num => num * 2);
+function promise3(num){
+	return new Promise((resolve) =>{
+		setTimeout(() =>{
+			div.textContent = `Result: ${num - 3}`;
+			resolve(num - 3);
+		}, 1000)
+	});
+}
 
-        // Return another promise that resolves after an additional 2-second delay
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                outputDiv.textContent = multiplied.join(","); // Updates DOM to: 4,8
-                resolve(multiplied);
-            }, 2000);
-        });
-    });
+function promise4(num){
+	return new Promise((resolve) =>{
+		setTimeout(() =>{
+			div.textContent = `Result: ${num/2}`;
+			resolve(num/2);
+		}, 1000)
+	});
+}
+
+function promise5(num){
+	return new Promise((resolve) =>{
+		setTimeout(() =>{
+			div.textContent = `Final Result: ${num + 10}`;
+			resolve(num+10);
+		}, 1000)
+	});
+}
+
+
+btn.addEventListener("click", () => {
+	let numVal = Number(num.value.trim());
+	promise1(numVal).then((num1) =>{
+		return promise2(num1);
+	}).then((num2) =>{
+		return promise3(num2);
+	}).then((num3) =>{
+		return promise4(num3);
+	}).then((num4) =>{
+		return promise5(num4);
+	}).then((num5) =>{
+		console.log("done");
+	})
+})
